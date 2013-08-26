@@ -1,0 +1,7 @@
+
+
+class Linup < ActiveRecord::Base
+
+  self.table_name = 'linup'
+
+end
