@@ -1,0 +1,3 @@
+class TimeheaderHour < Timeheader
+end
+
