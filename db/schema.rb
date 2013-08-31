@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20130831181146) do
 
   create_table "crew", id: false, force: true do |t|
     t.string "program", limit: 14, null: false
@@ -21,6 +21,32 @@ ActiveRecord::Schema.define(version: 0) do
 
   add_index "crew", ["name"], name: "name", using: :btree
   add_index "crew", ["program"], name: "program", using: :btree
+
+  create_table "events", id: false, force: true do |t|
+    t.string   "program",        limit: 14, null: false
+    t.integer  "station",                   null: false
+    t.datetime "time",                      null: false
+    t.datetime "etime",                     null: false
+    t.integer  "duration",                  null: false
+    t.integer  "startDate",                 null: false
+    t.integer  "startTime",                 null: false
+    t.integer  "weekday",                   null: false
+    t.boolean  "new"
+    t.boolean  "stereo"
+    t.boolean  "subtitled"
+    t.boolean  "hdtv"
+    t.boolean  "closeCaptioned"
+    t.boolean  "ei"
+    t.string   "tvRating",       limit: 5
+    t.string   "dolby",          limit: 30
+    t.integer  "partNumber"
+    t.integer  "partTotal"
+  end
+
+  add_index "events", ["program", "station"], name: "program", using: :btree
+  add_index "events", ["startDate"], name: "startDate", using: :btree
+  add_index "events", ["startTime"], name: "startTime", using: :btree
+  add_index "events", ["weekday"], name: "weekday", using: :btree
 
   create_table "genre", id: false, force: true do |t|
     t.string  "program",   limit: 14, null: false
@@ -72,10 +98,31 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "program", ["title"], name: "title", using: :btree
   add_index "program", ["year"], name: "year", using: :btree
 
+  create_table "programs", force: true do |t|
+    t.string  "series",                  limit: 10
+    t.string  "title",                   limit: 120, null: false
+    t.string  "subtitle",                limit: 150
+    t.string  "description"
+    t.string  "mpaaRating",              limit: 5
+    t.string  "starRating",              limit: 5
+    t.integer "runTime"
+    t.integer "year"
+    t.string  "showType",                limit: 30
+    t.string  "colorCode",               limit: 20
+    t.date    "originalAirDate"
+    t.string  "syndicatedEpisodeNumber", limit: 20
+    t.string  "advisories",              limit: 190
+  end
+
+  add_index "programs", ["title", "subtitle", "description"], name: "text", type: :fulltext
+  add_index "programs", ["title"], name: "title", using: :btree
+  add_index "programs", ["year"], name: "year", using: :btree
+
   create_table "schedule", id: false, force: true do |t|
     t.string   "program",        limit: 14, null: false
     t.integer  "station",                   null: false
     t.datetime "time",                      null: false
+    t.datetime "etime",                     null: false
     t.integer  "duration",                  null: false
     t.integer  "startDate",                 null: false
     t.integer  "startTime",                 null: false
