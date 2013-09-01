@@ -7,6 +7,7 @@
 class ScheduleController < ApplicationController
 
   def index # angular.js version
+    check_config
   end
 
   def show
@@ -15,8 +16,7 @@ class ScheduleController < ApplicationController
   end
 
   def schedule
-    meth = params[:reset] ? :config_from_yaml : :ensure_config
-    SchedResource.send( meth, session )
+    check_config
 
     param_defaults params
     get_data_for_time_span
@@ -44,6 +44,11 @@ class ScheduleController < ApplicationController
 
 
   private
+
+  def check_config
+    meth = params[:reset] ? :config_from_yaml : :ensure_config
+    SchedResource.send( meth, session )
+  end
 
   def json_adjustments
     @blockss.each do |rsrc, blocks|

@@ -122,7 +122,7 @@ class SchedResource
   def self.ensure_config( session ) # :nodoc:
     return if (self.config ||= session[:schedule_config])
 
-    SchedResource.config_from_yaml( session )
+    config_from_yaml( session )
   end
 
 
@@ -130,9 +130,17 @@ class SchedResource
   def self.config_from_yaml( session )
     config_from_yaml1
     config_from_yaml2 session
+    show_config # if Rails.env == 'development'
     config
   end
 
+  def self.show_config
+    puts "\nConfig:"
+    config.keys.each{ |key| 
+      puts "  #{key}: #{config[key].inspect}"
+    }
+
+  end
 
   private
   # A caching one-of-each-sort constructor.
