@@ -12,5 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require angular
+//= require use_block
+//= require controllers
+//= require infopopup
 //= require turbolinks
 //= require_tree .
+
+
