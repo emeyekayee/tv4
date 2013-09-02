@@ -20,17 +20,17 @@ function do_justify_tweaks (sc, scrollLeft) {
     justify( scrollLeft, $(this).children() )
   });
 
-  $('.RuleSchedulerow .timespan').each( function() {       // Centered
-    justify( scrollLeft, $(this).children() )
-  });
+  // $('.RuleSchedulerow .timespan').each( function() {       // Centered
+  //   justify( scrollLeft, $(this).children() )
+  // });
 
   $('.Stationrow .timespan').each( function() {            // Left-aligned
     justify_left( scrollLeft, $(this).children() )
   });
 
-  $('.Storyrow .timespan').each( function() {              // Left-aligned
-    justify_left( scrollLeft, $(this).children() )
-  });
+  // $('.Storyrow .timespan').each( function() {              // Left-aligned
+  //   justify_left( scrollLeft, $(this).children() )
+  // });
 }
 
 
@@ -96,18 +96,17 @@ function undo_any_justify_left (bdivs) {
 function rand_speed() { return { duration: 400 + Math.random() * 400 } }
 
 //////////////////////////////////////////////////////////////////////////////
-// Re-align center-aligned block content ()
-
+// Re-align center-aligned block content.
+ 
 function justify (scrollLeft, blockdivs) {
   // sort_em(blockdivs)
   var scrollRight = scrollLeft + TimePix.pixWindow,
       bdivs       = may_straddle (scrollLeft, scrollRight, blockdivs);
   if (! bdivs.length) {return}
 
-
-  if (false) // (bdivs.length == 1) // TTD: STILL NOT RIGHT for full overlaps!
+  if ( straddles(scrollLeft, bdivs[0]) && straddles(scrollRight, bdivs[0]) ) {
     straddles_both( scrollLeft, scrollRight, common_data(bdivs[0]) )
-  else {
+  } else {
 
     while ( bdivs.length > 0 && straddles( scrollLeft, bdivs[0] ) ) {
       straddles_left  (scrollLeft,  common_data(bdivs.shift()));
@@ -118,7 +117,7 @@ function justify (scrollLeft, blockdivs) {
     }
 
     bdivs.forEach( function(bdiv) {
-      straddles_none(             common_data(bdiv));
+      straddles_none(               common_data(bdiv));
     })
   }
 }
