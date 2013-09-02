@@ -15,6 +15,7 @@
 //= require angular
 //= require use_block
 //= require controllers
+//= require script
 //= require infopopup
 //= require turbolinks
 //= require_tree .

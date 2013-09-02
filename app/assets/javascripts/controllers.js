@@ -1,5 +1,10 @@
 'use strict';
 
+// ============================================================================
+// Hi-lock: ((" [T]TD.*"                                      (0 'accent10 t)))
+// Hi-lock: (("\\(^\\|\\W\\)\\*\\(\\w.*\\w\\)\\*\\(\\W\\|$\\)" (2 'accent3 t)))
+// Hi-lock: end
+// ============================================================================
 
 // Don't repeat the same calculation.
 function filter_justify_tweaks(sc) {
@@ -15,24 +20,32 @@ function do_justify_tweaks (sc, scrollLeft) {
     justify( scrollLeft, $(this).children() )
   });
 
-  $('.Channelrow .timespan').each( function() {            // Left-aligned
+  $('.RuleSchedulerow .timespan').each( function() {       // Centered
+    justify( scrollLeft, $(this).children() )
+  });
+
+  $('.Stationrow .timespan').each( function() {            // Left-aligned
+    justify_left( scrollLeft, $(this).children() )
+  });
+
+  $('.Storyrow .timespan').each( function() {              // Left-aligned
     justify_left( scrollLeft, $(this).children() )
   });
 }
 
 
 function may_straddle (scrollLeft, scrollRight, blockdivs) {
-  var divs = [], i = 0, len = blockdivs.length, bdiv;
+  var divs = [], bdiv, cd;
+  var len = blockdivs.length;
 
-  while ( i < len  &&  (bdiv = blockdivs[i])  &&
-          parseInt(bdiv.style.left) < scrollLeft ) {i++}
-  if (i > 0) { i-- }
+  for (var i = 0;
+       (i<len) && (cd = common_data(blockdivs[i])) && cd.bdiv_right < scrollLeft;
+       i++) {}
 
-  while ( i < len  &&
-          (bdiv = blockdivs[i])  &&
-          parseInt(bdiv.style.left) < scrollRight ) {
+  for (;
+       (i<len) && (bdiv= blockdivs[i]) && parseInt(bdiv.style.left) < scrollRight;
+       i++) {
     divs.push( bdiv )
-    i++
   }
   return divs
 }
@@ -54,9 +67,12 @@ function justify_left (scrollLeft, blockdivs) {
       bdivs       = may_straddle (scrollLeft, scrollRight, blockdivs);  
   if (! bdivs.length) {return}
 
-  justify_left_1 ( scrollLeft,  common_data( bdivs.shift() ) );  
-
-  undo_any_justify_left (bdivs);
+  var cd = common_data( bdivs[0] )
+  if ( cd.bdiv_left < scrollLeft  ) {
+    bdivs.shift()
+    justify_left_1 ( scrollLeft,  cd );
+  }
+  undo_any_justify_left( bdivs );
 }
 
 function justify_left_1 ( scrollLeft, cd ) {
@@ -88,18 +104,37 @@ function justify (scrollLeft, blockdivs) {
       bdivs       = may_straddle (scrollLeft, scrollRight, blockdivs);
   if (! bdivs.length) {return}
 
-  if (bdivs.length == 1)
+
+  if (false) // (bdivs.length == 1) // TTD: STILL NOT RIGHT for full overlaps!
     straddles_both( scrollLeft, scrollRight, common_data(bdivs[0]) )
   else {
-    straddles_left  (scrollLeft,  common_data(bdivs.shift()));
-    straddles_right (scrollRight, common_data(bdivs.pop()));
+
+    while ( bdivs.length > 0 && straddles( scrollLeft, bdivs[0] ) ) {
+      straddles_left  (scrollLeft,  common_data(bdivs.shift()));
+    }
+
+    while ( bdivs.length > 0 && straddles( scrollRight, bdivs.slice(-1)[0] ) ) {
+      straddles_right( scrollRight, common_data(bdivs.pop()) );
+    }
+
+    bdivs.forEach( function(bdiv) {
+      straddles_none(             common_data(bdiv));
+    })
   }
 }
 
+function straddles(edge, bdiv) {
+  var cd = common_data( bdiv )
+  return ( cd.bdiv_left < edge && edge < cd.bdiv_right )
+}
+
 function common_data(bdiv) {
+  var left  = parseInt(bdiv.style.left)
+  var width = parseInt(bdiv.style.width)
   return { tl:         $('.text_locator', bdiv),
-           bdiv_left:  parseInt(bdiv.style.left),  
-           bdiv_width: parseInt(bdiv.style.width) }
+           bdiv_left:  left,
+           bdiv_width: width,
+           bdiv_right: left + width }
 }
 
 function straddles_both (scrollLeft, scrollRight, cd) {
@@ -111,7 +146,7 @@ function straddles_both (scrollLeft, scrollRight, cd) {
 function straddles_right (scrollRight, cd) {
   if ( cd.bdiv_left + cd.bdiv_width > scrollRight ) {
     var room = scrollRight - parseInt( cd.tl.parent().css('left') )
-    var jwidth = Math.max( room, 190 )
+    var jwidth = Math.max( room, 190 ) // 15 in vp
     relocate (cd.tl,     0, jwidth)
   }
 }
@@ -119,11 +154,20 @@ function straddles_right (scrollRight, cd) {
 function straddles_left (scrollLeft, cd) {
   if ( cd.bdiv_left + cd.bdiv_width > scrollLeft ) {
     var room = parseInt( cd.tl.parent().css('width') )
-    var jleft  = Math.min (scrollLeft - cd.bdiv_left, room - 190 )
+    var jleft  = Math.min (scrollLeft - cd.bdiv_left, room - 190 ) // 15 in vp
     var jwidth = room - jleft           // Should calculate  ^^^ this Fix Me
     relocate (cd.tl, jleft, jwidth)
   }
 }
+
+function straddles_none(cd) {
+  var room = parseInt( cd.tl.parent().css('width') )
+  if ( parseInt(cd.tl.css('left'))  != 0 ||
+       parseInt(cd.tl.css('width')) != room ) {
+    relocate (cd.tl,    0, room)
+  }
+}
+
 
 function relocate (tl, nleft, nwidth) {
   tl.animate({opacity: 0}, {queue: true, duration: 200})
@@ -197,9 +241,14 @@ function ResourceListCtrl($scope, $http) {
           $scope.get_data( t1, t2, inc ).
             success( function(data) {
               Object.keys($scope.json_data).forEach( function(key) {
-                var controller = $scope.use_block_list_Ctls[key],
-                    blocks     = $scope.json_data[key]
-                controller.add_blocks( controller, blocks )
+                var controller = $scope.use_block_list_Ctls[key] // TTD: 2.1 Blows here
+                if( ! controller ) {
+                  console.log( "No key " + key + " in " +
+                               $scope.use_block_list_Ctls );
+                  return
+                }
+                var blocks     = $scope.json_data[key]
+                controller.add_blocks( controller, blocks ) // TTD: 2.0 Blows here
               })
             }); // errors handled above in get_data
         }
@@ -224,7 +273,11 @@ function ab (o) { return angular.bind( o, o.process ) }
 var process_fns = {
   TimeheaderDayNight: ab(TimeheaderDayNightUseBlock),
   TimeheaderHour:     ab(TimeheaderHourUseBlock),
-  Channel:            ab(ChannelUseBlock)
+  Station:            ab(StationUseBlock)
+  // Channel:            ab(ChannelUseBlock),
+  // RuleSchedule:       ab(RuleScheduleUseBlock),
+  // Story:              ab(StoryUseBlock),
+  // State:              ab(StateUseBlock)
 }
 
 
@@ -238,8 +291,8 @@ function UseBlockListCtrl($scope) {
         how = 'unshift'
         blocks.reverse()
       }                        
-
-      blocks.forEach( function(block) {
+      if( ! blocks ) { return }
+      blocks.forEach( function(block) { // TTD: Blows up here 0
         $scope.insert_block( $scope.process_fn(block.blk), how )
       })
     },
@@ -266,7 +319,7 @@ function UseBlockListCtrl($scope) {
 
   $scope.add_blocks( $scope, blocks )
 }
-UseBlockListCtrl.$inject = ['$scope'];
+UseBlockListCtrl.$inject = ['$scope']; // TTD: Blows up here 1 (vp)
 
 
 function UseBlockCtrl($scope) {

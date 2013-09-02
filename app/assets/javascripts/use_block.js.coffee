@@ -2,17 +2,19 @@ class @UseBlock
   constructor: -> nil
 
 
-class @ChannelUseBlock extends UseBlock
+# Uses these fields of block: title, subtitle, category, category_type, 
+# Sets these fields of block: label, css_classes
+class @StationUseBlock extends UseBlock
   constructor: -> nil
 
-  @process: (prog) ->
-    @css_classes prog
-    @label       prog
-    prog
+  @process: (block) ->
+    @css_classes block
+    @label       block
+    block
 
-  @label: (prog) ->
-    prog.label  = prog.title
-    prog.label += ":<br> #{prog.subtitle}" if prog.subtitle
+  @label: (block) ->
+    block.label  = block.title
+    block.label += ":<br> #{block.subtitle}" if block.subtitle
 
   @css_classes: (block) ->
     block.css_classes = @ct_name(block) + " " + @to_css_class(block.category)

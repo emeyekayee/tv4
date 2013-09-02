@@ -26,6 +26,7 @@ class @TimePix            # Ultimately, an angular $service
     @tlo = @tlo && Math.min( @tlo, @meta.t1 ) || @meta.t1
     @thi = @thi && Math.max( @thi, @meta.t2 ) || @meta.t2
     @inc = @meta.inc
+    @timeWindow = @meta.visible_time if @meta.visible_time
 
   @next_hi: -> @thi + @timeWindow
   @next_lo: -> @tlo - @timeWindow
@@ -42,7 +43,7 @@ class @TimePix            # Ultimately, an angular $service
     [s, e] = [block.starttime, block.endtime]             # per margins V
     "left: #{@secs_to_pix_scale(s - @baseTime)}px; " +
     "width: #{@secs_to_pix_scale(e-s)-4}px;" 
-  
+
   @row_kind: (tag) ->  # may/may not belong here.
     tag.split('_')[0]
 

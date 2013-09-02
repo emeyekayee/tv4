@@ -12,7 +12,8 @@ visibleTime: 3.hours
 Resources:
    - TimeheaderDayNight   dayNight0
    - TimeheaderHour       hour0
-   # - Station              703 709 60 189 190
+   - Station              3 703 
+   # - Station              709 60 189 190
    # - TimeheaderHour       hour1
    # - Station              37 737 42 738 756 757 49
    # - Station              798

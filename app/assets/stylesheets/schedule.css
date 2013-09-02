@@ -115,20 +115,20 @@ a:visited               { color: white;  text-decoration: none;}
                           opacity:          0.5;
                         }
 
-.Channelrow .rsrclabel > div.filter {
+.Stationrow .rsrclabel > div.filter {
                           height:           36px;
                         }
 
 
-.Channelrow .rsrclabel div
+.Stationrow .rsrclabel div
                         { font-size:        16pt; }
 
 
-.Channelrow             { height:           36px;}
-.Channelrow .blockdiv   { height:           32px;
+.Stationrow             { height:           36px;}
+.Stationrow .blockdiv   { height:           32px;
                           padding:          2px;
                         }
-.Channelrow .rsrclabel img 
+.Stationrow .rsrclabel img 
                         {                     /* "inherit" no go for IE  */
                           height:           36px;
                           width:            56px;

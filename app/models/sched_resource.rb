@@ -185,7 +185,7 @@ class SchedResource
     config[:rsrcs_by_kind] = resource_list.group_by{ |r| r.kind }
 
     config[:rsrcs_by_kind].each do |kind, rsrcs|
-      klass = eval kind
+      klass = kind.constantize
       rsrcs.each do |rsrc|
         klass.find_as_schedule_resource(rsrc.sub_id).decorate_resource rsrc
       end

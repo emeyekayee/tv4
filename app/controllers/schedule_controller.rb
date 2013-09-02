@@ -24,6 +24,11 @@ class ScheduleController < ApplicationController
     #   format.html
     #   format.json do
         json_adjustments
+
+        puts
+        @blockss.each{|k,v| puts "#{k}: #{v.inspect}"}
+        puts
+
         render json: @blockss
     #   end
     # end
