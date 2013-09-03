@@ -15,6 +15,10 @@ Resources:
    - Station              3 703 
    - Station              709 60 189 190
    - TimeheaderHour       hour1
-   - Station              37 737 42 738 756 757 49
-   - Station              798
+   - Station              37 737 
+   - Station              756
+   - Station              42 738
+   - Station              757
+   - Station              49 798 
+   - Station              162 810
    #                    738
