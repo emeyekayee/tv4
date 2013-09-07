@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20130831181146) do
     t.date    "originalAirDate"
     t.string  "syndicatedEpisodeNumber", limit: 20
     t.string  "advisories",              limit: 190
+    t.string  "lgenre",                  limit: 130
   end
 
   add_index "program", ["title", "subtitle", "description"], name: "text", type: :fulltext

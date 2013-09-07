@@ -3,10 +3,11 @@
 class Program < ActiveRecord::Base
   self.table_name = 'program'
 
-  has_one :genre, foreign_key: 'program'
+  has_many :genres, foreign_key: 'program'
 
   def category
-    genre.genre
+    # genre.genre
+    lgenre # table-local concatenation of genres
   end
 
   def category_type

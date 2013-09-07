@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # event.rb
 # Copyright (c) 2008-2012 Mike Cannon (http://github.com/emeyekayee/Tv4)
 # (michael.j.cannon@gmail.com)
@@ -71,26 +72,34 @@ class Event < ActiveRecord::Base
   end
 
   # use_block.js.coffee...
-  #  uses these fields of block: starttime, endtime, title, subtitle, category, category_type, 
+  #  uses these fields of block: starttime, endtime, title, subtitle, category, category_type,
   #  sets these fields of block: label, css_classes
 
   def get_visual_info
+    prog = program || SRHash[{ title: "Program  #{self.read_attribute(:program)}  record missing.",
+                               subtitle: '', description: '', category: '',
+                               category_type: '', stars: 0, originalAirDate: '',
+                             }] # Happened (Fri Sep 6 '13) channel 756, 10pm
+                      
     SRHash[{
               channum: station.channum,
-                title: program.title,
-             subtitle: program.subtitle,
-          description: program.description,
+                title: prog.title,
+             subtitle: prog.subtitle,
+          description: prog.description,
             starttime: time.to_i,
               endtime: etime.to_i,
-             category: program.category,
-        category_type: program.category_type,
-                stars: program.stars,
-              airdate: program.originalAirDate,
+             category: prog.category,
+        category_type: prog.category_type,
+                stars: prog.stars,
+              airdate: prog.originalAirDate,
       previouslyshown: ! self.new,
                  hdtv: hdtv,
           # css_classes: program.style_classes,
           # block_label: program.block_label,
      }]
+    rescue
+    puts "\n#{self.inspect}"
+    raise
   end
 
 end
