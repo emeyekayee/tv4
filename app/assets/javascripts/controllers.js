@@ -93,7 +93,7 @@ function undo_any_justify_left (bdivs) {
   })
 }
 
-function rand_speed() { return { duration: 400 + Math.random() * 400 } }
+function rand_speed() { return { duration: 200 + Math.random() * 800 } }
 
 //////////////////////////////////////////////////////////////////////////////
 // Re-align center-aligned block content.
