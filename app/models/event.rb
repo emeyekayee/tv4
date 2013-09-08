@@ -61,10 +61,6 @@ class Event < ActiveRecord::Base
               t1,
               t2 ]
 
-
-    # TTD How to pull in program.genre something like...
-    #      Event.includes(:program).where(...).references(:program)...
-
     evts = Event.includes(:program).order("station, time").where(conds)
     blks = evts.map{ |evt| evt.get_visual_info }
 
@@ -82,7 +78,7 @@ class Event < ActiveRecord::Base
                              }] # Happened (Fri Sep 6 '13) channel 756, 10pm
                       
     SRHash[{
-              channum: station.channum,
+              channum: Map.station_to_channel[ station_before_type_cast ], # WAS: station.channum,
                 title: prog.title,
              subtitle: prog.subtitle,
           description: prog.description,

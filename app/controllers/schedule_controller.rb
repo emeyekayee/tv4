@@ -69,13 +69,13 @@ class ScheduleController < ApplicationController
 
   # TTD: Should not rely on specific type (Event).  FIX ME 
   # TTD: Also, consider a class_attribute here
- def min_time
+  def min_time
     @min_time ||= Event.minimum(:time).to_i
   end
 
   # TTD: Should not rely on specific type (Event).  FIX ME 
   # TTD: Also, consider a class_attribute here
-def max_time
+  def max_time
     @max_time ||= Event.maximum(:etime).to_i
   end
 
