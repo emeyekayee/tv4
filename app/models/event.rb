@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 # event.rb
-# Copyright (c) 2008-2012 Mike Cannon (http://github.com/emeyekayee/Tv4)
+# Copyright (c) 2008-2013 Mike Cannon (http://github.com/emeyekayee/Tv4)
 # (michael.j.cannon@gmail.com)
 
 require 's_r_hash'
 
 class Event < ActiveRecord::Base
+  self.table_name = 'schedule'
+
   belongs_to :program, foreign_key: :program
   belongs_to :station, foreign_key: :station
 
@@ -48,18 +50,14 @@ class Event < ActiveRecord::Base
   def self.get_all_blocks( rids, t1, t2, inc )
     station_ids = rids.map{ |rid| Station.find_as_schedule_resource(rid).id }
 
-    condlo = "(etime) > "                      # endtime
-    condlo = "(time) >=" if inc == 'hi'        # starttime
+    condlo = "etime > "                      # endtime
+    condlo = "time >=" if inc == 'hi'        # starttime
 
-    condhi = "(time) <"                        # starttime
-    condhi = "(etime) <=" if inc == 'lo'       # endtime
+    condhi = "time <"                        # starttime
+    condhi = "etime <=" if inc == 'lo'       # endtime
 
-    conds = [ "(station IN (?))            AND " +
-              "(#{condlo} ?) AND " +
-              "(#{condhi} ?)",
-              station_ids,
-              t1,
-              t2 ]
+    conds = [ "station IN (?) AND (#{condlo} ?) AND (#{condhi} ?)",
+              station_ids, t1, t2 ]
 
     evts = Event.includes(:program).order("station, time").where(conds)
     blks = evts.map{ |evt| evt.get_visual_info }
@@ -70,12 +68,10 @@ class Event < ActiveRecord::Base
   # use_block.js.coffee...
   #  uses these fields of block: starttime, endtime, title, subtitle, category, category_type,
   #  sets these fields of block: label, css_classes
-
+  # Also available (got info-popup)
+  #  channum, description, stars, airdate, previouslyshown, hdtv
   def get_visual_info
-    prog = program || SRHash[{ title: "Program  #{self.read_attribute(:program)}  record missing.",
-                               subtitle: '', description: '', category: '',
-                               category_type: '', stars: 0, originalAirDate: '',
-                             }] # Happened (Fri Sep 6 '13) channel 756, 10pm
+    prog = program || default_program
                       
     SRHash[{
               channum: Map.station_to_channel[ station_before_type_cast ], # WAS: station.channum,
@@ -90,12 +86,17 @@ class Event < ActiveRecord::Base
               airdate: prog.originalAirDate,
       previouslyshown: ! self.new,
                  hdtv: hdtv,
-          # css_classes: program.style_classes,
-          # block_label: program.block_label,
      }]
     rescue
     puts "\n#{self.inspect}"
     raise
+  end
+
+  def default_program
+    SRHash[{ title: "Program  #{self.read_attribute(:program)}  record missing.",
+             subtitle: '', description: '', category: '',
+             category_type: '', stars: 0, originalAirDate: '',
+           }] # Happened (Fri Sep 6 '13) channel 756, 10pm
   end
 
 end

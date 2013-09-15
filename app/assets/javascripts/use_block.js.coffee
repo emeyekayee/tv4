@@ -15,6 +15,13 @@ class @StationUseBlock extends UseBlock
   @label: (block) ->
     block.label  = block.title
     block.label += ":<br> #{block.subtitle}" if block.subtitle
+    block.label += "<span class='flags'>#{@flags(block)}</span>"
+
+  @flags: (block) ->
+    flags  = ''
+    flags += '  hd'  if block.hdtv
+    flags += '  new' unless block.previouslyshown
+    flags
 
   @css_classes: (block) ->
     block.css_classes = @ct_name(block) + " " + @to_css_class(block.category)
