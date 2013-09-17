@@ -65,14 +65,18 @@ class Event < ActiveRecord::Base
     blks.group_by { |blk| blk.channum }
   end
 
-  # use_block.js.coffee...
-  #  uses these fields of block: starttime, endtime, title, subtitle, category, category_type,
-  #  sets these fields of block: label, css_classes
-  # Also available (got info-popup)
-  #  channum, description, stars, airdate, previouslyshown, hdtv
+  # class @StationUseBlock in use_block.js.coffee...
+  #
+  #  Uses fields   : starttime, endtime, title, subtitle,  category,
+  #                  category_type, previouslyshown, hdtv
+  #
+  #  Sets fields   : label, css_classes
+  #
+  # Also available : channum, description, stars, airdate
+  #
   def get_visual_info
     prog = program || default_program
-                      
+
     SRHash[{
               channum: Map.station_to_channel[ station_before_type_cast ], # WAS: station.channum,
                 title: prog.title,
@@ -91,6 +95,7 @@ class Event < ActiveRecord::Base
     puts "\n#{self.inspect}"
     raise
   end
+
 
   def default_program
     SRHash[{ title: "Program  #{self.read_attribute(:program)}  record missing.",
