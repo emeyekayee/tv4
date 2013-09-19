@@ -15,7 +15,7 @@ class ResourceUseBlock
   delegate  :kind,      :to => :@rsrc
 
   delegate  :starttime=, :endtime=,  
-            :starttime,  :endtime,  :css_classes,     :block_label,
+            :starttime,  :endtime,  :block_label,
             :title,      :subtitle, :description,     :stars,
             :airdate,    :category, :previouslyshown,
       :to => :@blk
