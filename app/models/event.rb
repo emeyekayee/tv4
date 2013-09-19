@@ -11,12 +11,12 @@ class Event < ActiveRecord::Base
   belongs_to :program, foreign_key: :program
   belongs_to :station, foreign_key: :station
 
-  attr_accessor     :block_label, :detail_list
+  attr_accessor     :detail_list
 
   # Virtual attributes for the event.
-  @@event_attrs = %w(
-    title subtitle description starttime endtime
-    category category_type stars airdate previouslyshown, hdtv).join(', ')
+  # @@event_attrs = %w(
+  #   title subtitle description starttime endtime
+  #   category category_type stars airdate previouslyshown, hdtv).join(', ')
 
   # def channum
   #   Map.station_to_channel[station] # => 58 eg
