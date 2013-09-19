@@ -6,13 +6,12 @@
 require 'timeheader'
 
 class Timelabel
-  attr_accessor :starttime, :endtime, :css_classes, :block_label
+  attr_accessor :starttime, :endtime, :block_label
 
   class_attribute :label, :format, :t_block
 
   def initialize( t )
     @block_label = t.strftime(self.format).sub( /^0/, '' ).html_safe
-    @css_classes = "timeblock #{t.strftime "%P"}Timeblock"
     @starttime, @endtime = [t, t+t_block].map{|t| t.to_i.to_s}
   end
 
