@@ -1,5 +1,5 @@
 # ============================================================================
-# Hi-lock: (("# [T]TD.*"                                     (0 'accent10 t)))
+# Hi-lock: (("# ?[T]o Do:.*"                                  (0 'accent10 t)))
 # Hi-lock: (("\\(^\\|\\W\\)\\*\\(\\w.*\\w\\)\\*\\(\\W\\|$\\)" (2 'accent3 t)))
 # Hi-lock: end
 # ============================================================================
@@ -67,14 +67,14 @@ class ScheduleController < ApplicationController
     }
   end
 
-  # TTD: Should not rely on specific type (Event).  FIX ME 
-  # TTD: Also, consider a class_attribute here
+  # To Do: Should not rely on specific type (Event).  FIX ME 
+  # To Do: Also, consider a class_attribute here
   def min_time
     @min_time ||= Event.minimum(:time).to_i
   end
 
-  # TTD: Should not rely on specific type (Event).  FIX ME 
-  # TTD: Also, consider a class_attribute here
+  # To Do: Should not rely on specific type (Event).  FIX ME 
+  # To Do: Also, consider a class_attribute here
   def max_time
     @max_time ||= Event.maximum(:etime).to_i
   end

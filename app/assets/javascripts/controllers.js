@@ -1,7 +1,7 @@
 'use strict';
 
 // ============================================================================
-// Hi-lock: ((" [T]TD.*"                                      (0 'accent10 t)))
+// Hi-lock: (("[T]o Do:.*"                                     (0 'accent10 t)))
 // Hi-lock: (("\\(^\\|\\W\\)\\*\\(\\w.*\\w\\)\\*\\(\\W\\|$\\)" (2 'accent3 t)))
 // Hi-lock: end
 // ============================================================================
@@ -240,14 +240,14 @@ function ResourceListCtrl($scope, $http) {
           $scope.get_data( t1, t2, inc ).
             success( function(data) {
               Object.keys($scope.json_data).forEach( function(key) {
-                var controller = $scope.use_block_list_Ctls[key] // TTD: 2.1 Blows here
+                var controller = $scope.use_block_list_Ctls[key] // To Do: 2.1 Blows here
                 if( ! controller ) {
                   console.log( "No key " + key + " in " +
                                $scope.use_block_list_Ctls );
                   return
                 }
                 var blocks     = $scope.json_data[key]
-                controller.add_blocks( controller, blocks ) // TTD: 2.0 Blows here
+                controller.add_blocks( controller, blocks ) // To Do: 2.0 Blows here
               })
             }); // errors handled above in get_data
         }
@@ -291,7 +291,7 @@ function UseBlockListCtrl($scope) {
         blocks.reverse()
       }                        
       if( ! blocks ) { return }
-      blocks.forEach( function(block) { // TTD: Blows up here 0
+      blocks.forEach( function(block) { // To Do: Blows up here 0
         $scope.insert_block( $scope.process_fn(block.blk), how )
       })
     },
@@ -318,7 +318,7 @@ function UseBlockListCtrl($scope) {
 
   $scope.add_blocks( $scope, blocks )
 }
-UseBlockListCtrl.$inject = ['$scope']; // TTD: Blows up here 1 (vp)
+UseBlockListCtrl.$inject = ['$scope']; // To Do: Blows up here 1 (vp)
 
 
 function UseBlockCtrl($scope) {

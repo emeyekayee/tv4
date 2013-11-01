@@ -56,13 +56,12 @@ class Event < ActiveRecord::Base
     condhi = "time <"                        # starttime
     condhi = "etime <=" if inc == 'lo'       # endtime
 
-    conds = [ "station IN (?) AND (#{condlo} ?) AND (#{condhi} ?)",
-              station_ids, t1, t2 ]
+    conds = [ "station IN (?) AND (#{condlo} ?) AND (#{condhi} ?)", station_ids, t1, t2 ]
 
     evts = Event.includes(:program).order("station, time").where(conds)
     blks = evts.map{ |evt| evt.get_visual_info }
 
-    blks.group_by { |blk| blk.channum }
+    blks.group_by {|blk| blk.channum }
   end
 
   # class @StationUseBlock in use_block.js.coffee...
@@ -91,7 +90,7 @@ class Event < ActiveRecord::Base
       previouslyshown: ! self.new,
                  hdtv: hdtv,
      }]
-    rescue
+  rescue
     puts "\n#{self.inspect}"
     raise
   end

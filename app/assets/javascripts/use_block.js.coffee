@@ -129,14 +129,17 @@ class @TimeheaderHourUseBlock extends UseBlock
     block
 
   @label: (block) ->
-    date   = new Date block.starttime * 1000
+    date   = @get_date(block)
     hours  = date.getHours() + 12;
     hours -= 12 while hours > 12
     mins   = date.getMinutes()
-    block.label = "    #{hours}:#{mins}".replace( /:0$/, ':00' )
+    block.label = " #{hours}:#{mins}".replace( /:0$/, ':00' )
 
   @css_classes: (block) ->
-    block.css_classes = 'TimeheaderHourrow'
+    hours  = @get_date(block).getHours();
+    day_night = 'dayTimeblock'
+    day_night = 'niteTimeblock' if hours < 6 || hours >= 18
+    block.css_classes = "TimeheaderHourrow #{day_night}"
 
-
-
+  @get_date: (block) ->
+    new Date block.starttime * 1000

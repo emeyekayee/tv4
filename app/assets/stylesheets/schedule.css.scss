@@ -1,88 +1,90 @@
 /* schedule.css.scss
    Classes for ruby/rails/ajax tv-schedule
     - Mike Cannon (Mon Mar 4 '13)
-                                       (http://github.com/emeyekayee/Timeline)
+                                       (http://github.com/emeyekayee/tv4)
                                        (michael.j.cannon@gmail.com)
    NOTE: Parts of this file borrowed (as noted) from mythweb, part of
          mythtv.  See their terms.
  */
 
-$bg-color: #002650;
-
+$bg-color:      #21456F;
+            /*  #002650; */
+$daytime-bg:    #33669E;
+$nitetime-bg:   #102441;
+                 
 
 body {
-  border:       0;
-  margin:       10px;
-  padding:      0;
-  font-size:    11pt;
-  font-family:  Arial, Helvetica, sans-serif;
-  background-color: $bg-color;
+  border:           0;
+  margin:           10px;
+  padding:          0;
+  font-size:        11pt;
+  font-family:      Arial, Helvetica, sans-serif;
+  background:       $bg-color;
 }
 
-h2        {  color: #194B82 }
+h2        {  color: #204882 }
 
 a:link    {  color: white;  text-decoration: none;}
 a:visited {  color: white;  text-decoration: none;}
 
 
 .timespan {
-  position:     absolute;
-  left:         0px;  /* WAS 68px, space for labels */
+  position:         absolute;
+  left:             0px;  /* WAS 68px, space for labels */
 }
 
 .flags {
-  color: #ffff9b;
+  color:            #ffff9b;
 }
 
 .blockdiv {
-  position:     absolute;
-  border:       1px solid $bg-color;
-  font-size:    11px;
-  line-height:  1.2;
-  white-space:  nowrap;
-  overflow:     hidden;
+  position:         absolute;
+  border:           1px solid $bg-color;
+  font-size:        11px;
+  line-height:      1.2;
+  white-space:      nowrap;
+  overflow:         hidden;
 }
 
-
 #current-time-cursor {
-  border-left:  1px solid rgba(255,0,0,.65);
-  z-index:      1;
-  width:        1px;
-  height:       4000px;
-  position:     absolute;
+  border-left:      1px solid rgba(255,0,0,.65);
+  z-index:          1;
+  width:            1px;
+  height:           4000px;
+  position:         absolute;
 }
 
 .text_locator {
-  position:     absolute;
-  left:         2px;
-  right:        4px;
-  overflow:     hidden;
+  position:         absolute;
+  left:             2px;
+  right:            4px;
+  overflow:         hidden;
 }
 
 #schedule-container{
-  position:     relative;
+  position:         relative;
 }
 
 #scrolling-container {
-  overflow-x:   scroll;
-  padding-bottom: 1px;
-  vertical-align: top;
-  width:        750px;
-  border:       1px solid red;
+  overflow-x:       scroll;
+  padding-bottom:   1px;
+  vertical-align:   top;
+  width:            750px;
+  border:           1px solid red;
 }
 
 #positioned-container {
-  overflow:     hidden;
-  margin:       1px;
-  margin-top:   0px;
-  width:        140000px;
-  position:     relative;
+  overflow:         hidden;
+  margin:           1px;
+  margin-top:       0px;
+  width:            140000px;
+  position:         relative;
 }
 
 #labels-container {
-  width:        60px;
-  vertical-align: top;
-  position:     absolute;
+  width:            60px;
+  vertical-align:   top;
+  position:         absolute;
 }
 
 #timespans-container {
@@ -92,60 +94,57 @@ a:visited {  color: white;  text-decoration: none;}
 }
 
 #resource-labels {
-  position:     relative;
-  padding-bottom: 2px;
-  left:         5px;
-  background-color: $bg-color;
-  border:       1px solid red;
+  position:         relative;
+  padding-bottom:   2px;
+  left:             5px;
+  background:       $bg-color;
+  border:           1px solid red;
 }
 
 
 #scrollbar-hider {
-  width:        811px;   /* per #resource-labels + */
-  height:       20px;    /* #scrolling-container   */
-  background-color: $bg-color;
-  position:     relative;
-  top:          -20px;
-  left:         5px;
-  border-top:   1px solid red;
+  width:            811px;   /* per #resource-labels + */
+  height:           20px;    /* #scrolling-container   */
+  background:       $bg-color;
+  position:         relative;
+  top:              -20px;
+  left:             5px;
+  border-top:       1px solid red;
 }
 
 .rsrcRow {
-  display:      block;
-  margin:       1px;
-  margin-left:  0px;
+  display:          block;
+  margin:           1px;
+  margin-left:      0px;
 }
 
-
-
-
 .rsrclabel {
-  position:     absolute;
-  width:        56px;
-  border:       1px solid $bg-color;
-  background-color: transparent; /* #265990 */
-  font-weight:  bold;
-  text-align:   center;
-  color:        white;
+  position:         absolute;
+  width:            56px;
+  border:           1px solid $bg-color;
+  background:       transparent; /* #265990 */
+  font-weight:      bold;
+  text-align:       center;
+  color:            white;
 
   img {
-    position:     absolute;
-    left:         0;
-    z-index:      0;
-    background-color: $bg-color;
+    position:         absolute;
+    left:             0;
+    z-index:          0;
+    background:       $bg-color;
   }
 
   > .label-text {
-    position:   absolute;
-    z-index:    2;
-    color:      rgba(255,255,255,.65);  /* #fff */
-    text-align: center;
-    width:      56px;
+    position:         absolute;
+    z-index:          2;
+    color:            rgba(255,255,255,.65);  /* #fff */
+    text-align:       center;
+    width:            56px;
   }
 
   > div.filter {
     position:         absolute;
-    background-color: $bg-color;
+    background:       $bg-color;
     width:            56px;
     z-index:          1;
     opacity:          0.5;
@@ -155,87 +154,93 @@ a:visited {  color: white;  text-decoration: none;}
 
 
 .Stationrow {
-  height:       36px;
+  height:           36px;
 
   .rsrclabel {
     div {
-      font-size:  16pt;
+      font-size:    16pt;
     }
 
     img {
-      height:   36px;       /* "inherit" no go for IE  */
-      width:    56px;
+      height:       36px;       /* "inherit" no go for IE  */
+      width:        56px;
     }
 
     > div.filter {
-      height:   36px;
+      height:       36px;
     }
 
   }
 
   .blockdiv {
-    height:     32px;
-    padding:    2px;
+    height:         32px;
+    padding:        2px;
   }
 }
+
 
 
 .TimeheaderHourrow,
 .TimeheaderDayNightrow {
-  height:       22px;
+  height:           22px;
 
   .rsrclabel {
-    height:     22px;
-    width:      56px;
+    height:         22px;
+    width:          56px;
 
     img {
-      height:   22px;       /* "inherit" no go for IE  */
-      width:    56px;
+      height:       22px;   /* "inherit" no go for IE  */
+      width:        56px;
     }
 
     > div.filter {
-      height:   22px;
+      height:       22px;
     }
   }
 
   .text_locator {
-    text-align: center;
+    text-align:     center;
   }
 
   .blockdiv {
-    height:     18px;
-    padding:     2px;
-    background-color: #265990;
-    font-size:  14px;
+    height:         18px;
+    padding:        2px;
+    background:     #265990;
+    font-size:      14px;
   }
 }
 
-
 .TimeheaderHourrow {
-  .blockdiv  {
-    text-align:  center;      /************/
+  .text_locator  {
+    text-align:     left;      /************/
   }
 }
 
 
 .ampmLeft, .ampmRight {
-  margin-top:   6px;
-  font-size:    80%;
-  color:        #C0D0E0;
+  margin-top:       6px;
+  font-size:        80%;
+  color:            #C0D0E0;
 }
 
-.ampmLeft   {   float:        left;    }
-.ampmRight  {   float:        right;   }
-.ampmCenter {   text-align:   center;  }
-.ampmCenter {   color:        #D0E0F0; }
+.ampmLeft   { float:        left;    }
+.ampmRight  { float:        right;   }
+.ampmCenter { text-align:   center;  }
+.ampmCenter { color:        #D0E0F0; }
 
-.blockdiv.amTimeblock   { background-color: #33669E; }
-.blockdiv.pmTimeblock   { background-color: #194B82; }
+.blockdiv.amTimeblock { /* background: $daytime-bg; */
+  background: -webkit-linear-gradient(left, $nitetime-bg, $nitetime-bg 47%, $daytime-bg 53%, $daytime-bg );
+}
+.blockdiv.pmTimeblock { /* background: $nitetime-bg; */
+  background: -webkit-linear-gradient(left, $daytime-bg,  $daytime-bg 47%, $nitetime-bg 53%, $nitetime-bg );
+}
+
+.blockdiv.dayTimeblock  { background: $daytime-bg  }
+.blockdiv.niteTimeblock { background: $nitetime-bg }
 
 /****************************************************************************/
 /* Styles for tooltips */
 
-/* A class for the left-cleared <dl> lists used for program details popups */
 
 div.tt {
   position:     fixed;
