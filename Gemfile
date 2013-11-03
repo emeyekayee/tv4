@@ -29,6 +29,7 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'hashie', '~> 2.0.5'
 
+gem 'pry'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

@@ -37,19 +37,19 @@ class Timelabel
   # * <tt>Hash</tt> - Each key is a <tt>rid</tt> such as Hour0
   # and the value is an array of Timelabels in the interval, ordered by
   # <tt>starttime</tt>.
-  def Timelabel.get_all_blocks(ids, t1, t2, inc)
+  def self.get_all_blocks(ids, t1, t2, inc)
     h = {}; ids.each{|id| h[id] = get_timeblocks(id, t1, t2, inc)}; h
   end
 
-  def Timelabel.get_timeblocks(id, t1, t2, inc)
-    klass = self
-    it0, it2, itb = [klass.floor(t1), t2, klass.t_block].map(&:to_i)
+  def self.get_timeblocks(id, t1, t2, inc)
+    # klass = self
+    it0, it2, itb = [floor(t1), t2, t_block].map(&:to_i)
 
     it0 += itb if inc == 'hi'
     it2 -= itb if inc == 'lo'
 
-    it0.step(it2, itb).map{|i| klass.new(Time.at i)}
+    it0.step(it2, itb).map{|i| new(Time.at i)}
   end # Hmm... Seems like step should work for Time as well as for numbers.
 
-  def Timelabel.floor(t) t; end
+  def self.floor(t) t; end
 end
