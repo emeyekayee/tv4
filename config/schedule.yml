@@ -18,6 +18,7 @@ Resources:
    - Station              189 190
    - Station              220
    - TimeheaderHour       hour1
+#   - Station              550 551
    - Station              37 737 
    - Station              42 738
    - Station              756

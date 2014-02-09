@@ -29,6 +29,8 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'hashie', '~> 2.0.5'
 
+gem 'whenever', require: false
+
 gem 'pry'
 
 group :doc do

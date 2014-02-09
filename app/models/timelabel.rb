@@ -19,14 +19,14 @@ class Timelabel
   # blocks) in the interval <tt>t1...t2</tt>, ordered by
   # <tt>starttime</tt>.
   #
-  # What <em>in</em> means depends on *inc*.  If inc(remental) is 
+  # What <em>in</em> means depends on *inc*.  If inc(remental) is
   # false, client is building interval from scratch.  If "hi", it is
   # an addition to an existing interval on the high side.  Similarly
   # for "lo".  This is to avoid re-transmitting blocks that span the
   # current time boundaries on the client.
   #
   # Here the resource is a channel and the use blocks are programs.
-  # 
+  #
   # ==== Parameters
   # * <tt>rids</tt> - A list of schedules resource ids (strings).
   # * <tt>t1</tt>   - Start time.
@@ -42,7 +42,6 @@ class Timelabel
   end
 
   def self.get_timeblocks(id, t1, t2, inc)
-    # klass = self
     it0, it2, itb = [floor(t1), t2, t_block].map(&:to_i)
 
     it0 += itb if inc == 'hi'
