@@ -12,9 +12,10 @@ visibleTime: 3.hours
 Resources:
    - TimeheaderDayNight   dayNight0
    - TimeheaderHour       hour0
+   - Station              60 2
    - Station              3 
    - Station              703 
-   - Station              709 60
+   - Station              709
    - Station              189 190
    - Station              220
    - TimeheaderHour       hour1

@@ -7,12 +7,18 @@
 #
 set :output, "#{path}/log/cron.log"
 #
-every 1.day, at: "02:45" do
+load_time  = "02:45"
+load_time  = "03:15" if `hostname`.chomp == "mjc4"
+
+after_load = "03:00"
+after_load = "03:30" if `hostname`.chomp == "mjc4"
+
+every 1.day, at: load_time do
   command "/usr/local/bin/xtvd_load"
   # rake "some:great:rake:task"
 end
 
-every 1.day, at: "03:00" do
+every 1.day, at: after_load do
   runner "Program.do_after_xtvd_load"
 end
 #

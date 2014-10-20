@@ -21,12 +21,14 @@ class Program < ActiveRecord::Base
 
   # Typically...> rails runner "Program.do_after_xtvd_load"
   def self.do_after_xtvd_load
+    puts "Starting  Program.do_after_xtvd_load on #{`hostname`.chomp}..."
     Rails.logger.silence{
       Program.all.includes(:genres).find_each do |p| 
         p.lgenre = p.genres.map(&:genre).join(' ')
         p.save!
       end
     }
+    puts "Completed Program.do_after_xtvd_load."
   end
 
 end
