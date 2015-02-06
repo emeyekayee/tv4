@@ -35,6 +35,7 @@ gem 'hashie', '~> 2.0.5'
 gem 'whenever', require: false
 
 gem 'pry'
+gem 'pry-rails'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

@@ -3,8 +3,12 @@
 # (michael.j.cannon@gmail.com)
 # See class SchedResource.
 
-require 'timelabel'
-require 'timeheader'
+# ============================================================================
+# Hi-lock: (("# [T]TD.*"                                      (0 'accent10 t)))
+# Hi-lock: (("\\(^\\|\\W\\)\\*\\(\\w.*\\w\\)\\*\\(\\W\\|$\\)" (2 'accent3  t)))
+# Hi-lock: end
+# ============================================================================
+
 
 # A "scheduled resource" is something that can be used for one thing at a time.
 #
@@ -25,8 +29,7 @@ require 'timeheader'
 # b) select instances of the <em>resource use block</em> class (eg Meeting).
 #
 # The id <em>may</em> be a database id but need not be.
-# It is used by model class methods
-# <tt>Resource.find_as_schedule_resource</tt> and
+# It is used by model class method
 # <tt>ResourceUseBlock.get_all_blocks</tt>.
 # Not tying this to a database id allows a little extra flexibility in
 # configuration.
@@ -130,17 +133,9 @@ class SchedResource
   def self.config_from_yaml( session )
     config_from_yaml1
     config_from_yaml2 session
-    show_config # if Rails.env == 'development'
     config
   end
 
-  def self.show_config
-    puts "\nConfig:"
-    config.keys.each{ |key| 
-      puts "  #{key}: #{config[key].inspect}"
-    }
-
-  end
 
   private
   # A caching one-of-each-sort constructor.
@@ -157,7 +152,7 @@ class SchedResource
 
   def self.config_from_yaml1()
     self.config = { all_resources: [],
-                    rsrc_of_tag: {}, 
+                    rsrc_of_tag: {},
                     block_class_for_resource_kind: {}
                    }
     yml = YAML.load_file "config/schedule.yml"
@@ -170,14 +165,18 @@ class SchedResource
       rkls.each do |rkl|                # ["TimeheaderHour", "Hour0"]
         rkl = rkl.split(/[, ]+/)        # ["Channel",    "702", "703",... ]
         rk  = rkl.shift
-        config[:all_resources] += rkl.map do |sub_id|
-          make_resource_of_kind(rk, sub_id)
-        end
+        add_resources rkl.map{ |sub_id| make_resource_of_kind(rk, sub_id) }
       end
     end
 
     config[:visible_time] = (vt = yml['visibleTime']) ? (eval vt) : 3.hours
     config
+  end
+
+  
+  def self.add_resources(rsrcs)
+    rs = config[:all_resources]
+    rsrcs.each{ |rsrc| rs.include?( rsrc ) || rs << rsrc }
   end
 
 
@@ -235,11 +234,16 @@ class SchedResource
 
   attr_accessor :label, :title
   def label();     @label || @tag end
+
+  def label=(val)
+    @label = val
+  end
+
   def title();     @title || @tag end
 
   # ==== Returns
   # * <tt>String</tt> - CSS classes automatically generated for the DOM row representing this SchedResource.
-  def css_classes_for_row(); "rsrcRow #{self.kind}row #{@tag}row" end
+  def css_classes_for_row(); "rsrcRow #{self.kind}row #{@tag}row #{self.kind}Row #{@tag}Row" end # Row + row -- really?
 
 end # class SchedResource
 
