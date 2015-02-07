@@ -6,14 +6,10 @@ ResourceKinds:
   ZTimeHeaderDay:       ZTimeLabelDay
   ZTimeHeaderHour:      ZTimeLabelHour
   Station:              Event
-  # TimeheaderDayNight:   TimelabelDayNight
-  # TimeheaderHour:       TimelabelHour
 
 visibleTime: 3.hours
        
 Resources:
-   # - TimeheaderDayNight   dayNight0
-   # - TimeheaderHour       hour0
    - ZTimeHeaderDay       -8
    - ZTimeHeaderHour      -8
    - Station              60 2
@@ -21,7 +17,6 @@ Resources:
    - Station              703 
    - Station              709
    - Station              189 190 220
-   # - TimeheaderHour       hour1
    - ZTimeHeaderHour      -8.
 #   - Station              550 551
    - Station              37 737 

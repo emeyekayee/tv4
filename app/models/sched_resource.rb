@@ -186,7 +186,6 @@ class SchedResource
     config[:rsrcs_by_kind].each do |kind, rsrcs|
       klass = kind.constantize
       rsrcs.each {|rsrc| klass.decorate_resource rsrc }
-      # klass.find_as_schedule_resource(rsrc.sub_id).decorate_resource rsrc
     end
 
     session[:schedule_config] = config

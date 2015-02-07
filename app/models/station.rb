@@ -54,7 +54,7 @@ class Station < ActiveRecord::Base
   #
   def self.decorate_resource( rsrc )
     rid = rsrc.sub_id
-    station = from_id[ Map.channel_to_station[rid.to_i] ]
+    station = find_as_schedule_resource(rid)
     
     station.decorate_resource( rsrc )
   end

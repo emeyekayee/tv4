@@ -1,3 +1,0 @@
-class TimeheaderHour < Timeheader
-end
-
