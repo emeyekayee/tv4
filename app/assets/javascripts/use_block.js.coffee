@@ -2,6 +2,46 @@ class @UseBlock
   constructor: -> nil
 
 
+class @ZTimeHeaderDayUseBlock extends UseBlock
+  constructor: -> nil
+
+  @process: (block) ->
+    @label       block
+    @css_classes block
+    block
+
+  @label: (block) ->
+    block.label  = block.title
+  
+  @css_classes: (block) ->
+    # Could just as well come from server.
+    classes = 'ZTimeHeaderDayRow '
+    block.css_classes = classes
+
+
+
+class @ZTimeHeaderHourUseBlock extends UseBlock
+  constructor: -> nil
+
+  @process: (block) ->
+    @label       block
+    @css_classes block
+    block
+
+  @label: (block) ->
+    block.label  = block.title
+  
+  @css_classes: (block) ->
+    # Could just as well come from server.
+    # classes = 'ZTimeHeaderHourRow '
+    # block.css_classes = classes
+
+
+
+
+
+
+
 # Uses these fields of block: title, subtitle, category, category_type, 
 # Sets these fields of block: label, css_classes
 class @StationUseBlock extends UseBlock
@@ -89,57 +129,3 @@ class @StationUseBlock extends UseBlock
 
 # console.log ChannelUseBlock.ct_name block
 # console.log ChannelUseBlock.css_classes block
-
-
-
-class @TimeheaderDayNightUseBlock extends UseBlock
-  constructor: -> nil
-
-  @process: (block) ->
-    @label       block
-    @css_classes block
-    block
-
-  @label: (block) ->
-    date = new Date block.starttime * 1000
-    ampm = date.getHours() < 12 && 'am' || 'pm' 
-    ds   = @munge( String date )
-    block.label = "<span class='ampmLeft'>   #{ampm}</span>#{ds}" +
-                  "<span class='ampmRight'>#{ampm}   </span>"
-  
-  @munge: (dstr) ->
-    dstr.replace( new RegExp(' ..:.*$'),       '' )
-        .replace( new RegExp(' \\d\\d\\d\\d'), '' )
-        .replace( new RegExp(' ', 'g'),      '  ' )
-
-  @css_classes: (block) ->
-    date = new Date block.starttime * 1000
-    classes = 'TimeheaderDayNightrow '
-    classes += date.getHours() >= 12 && 'pmTimeblock' || 'amTimeblock'
-    block.css_classes = classes
-
-
-
-class @TimeheaderHourUseBlock extends UseBlock
-  constructor: -> nil
-
-  @process: (block) ->
-    @label       block
-    @css_classes block
-    block
-
-  @label: (block) ->
-    date   = @get_date(block)
-    hours  = date.getHours() + 12;
-    hours -= 12 while hours > 12
-    mins   = date.getMinutes()
-    block.label = " #{hours}:#{mins}".replace( /:0$/, ':00' )
-
-  @css_classes: (block) ->
-    hours  = @get_date(block).getHours();
-    day_night = 'dayTimeblock'
-    day_night = 'niteTimeblock' if hours < 6 || hours >= 18
-    block.css_classes = "TimeheaderHourrow #{day_night}"
-
-  @get_date: (block) ->
-    new Date block.starttime * 1000

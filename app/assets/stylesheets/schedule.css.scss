@@ -12,7 +12,7 @@ $bg-color:      #1B3B5F;
             /*  #002650; */
 $daytime-bg:    #33669E;
 $nitetime-bg:   #102441;
-                 
+
 
 body {
   border:           0;
@@ -31,7 +31,7 @@ a:visited {  color: white;  text-decoration: none;}
 
 .timespan {
   position:         absolute;
-  left:             0px;  /* WAS 68px, space for labels */
+  left:             0px;
 }
 
 .flags {
@@ -163,7 +163,7 @@ a:visited {  color: white;  text-decoration: none;}
     }
 
     img {
-      height:       36px;       /* "inherit" no go for IE  */
+      height:       36px;       /* Is "inherit" still a no go for IE?  */
       width:        56px;
     }
 
@@ -181,16 +181,25 @@ a:visited {  color: white;  text-decoration: none;}
 
 
 
-.TimeheaderHourrow,
-.TimeheaderDayNightrow {
+.ZTimeHeaderHourrow,
+.ZTimeHeaderHourRow,
+.ZTimeHeaderDayrow,
+.ZTimeHeaderDayRow {
   height:           22px;
 
   .rsrclabel {
     height:         22px;
     width:          56px;
+    div {
+      font-size:    19px;
+      white-space:  nowrap;
+      overflow:     hidden;
+      text-align:   center;
+      color:        rgba(204, 204, 255, 0.5);
+    }
 
     img {
-      height:       22px;   /* "inherit" no go for IE  */
+      height:       22px;   /* Is "inherit" still a no go for IE ? */
       width:        56px;
     }
 
@@ -211,30 +220,32 @@ a:visited {  color: white;  text-decoration: none;}
   }
 }
 
-.TimeheaderHourrow {
-  .text_locator  {
-    text-align:     left;      /************/
+
+
+.ZTimeHeaderHourrow,
+.ZTimeHeaderHourRow {
+  .blockdiv {
+    font-size:      12px;
+    padding-top:     4px;
   }
 }
 
 
-.ampmLeft, .ampmRight {
-  margin-top:       6px;
-  font-size:        80%;
-  color:            #C0D0E0;
+.ZTimeHeaderDayrow,
+.ZTimeHeaderDayRow {
+  .blockdiv {
+    font-size:      16px;
+  }
 }
 
-.ampmLeft   { float:        left;    }
-.ampmRight  { float:        right;   }
-.ampmCenter { text-align:   center;  }
-.ampmCenter { color:        #D0E0F0; }
 
-.blockdiv.amTimeblock { /* background: $daytime-bg; */
-  background: -webkit-linear-gradient(left, $nitetime-bg, $nitetime-bg 47%, $daytime-bg 53%, $daytime-bg );
+.blockdiv.ZTimeHeaderDayRow { /* background: $daytime-bg; */
+  background: -webkit-linear-gradient(left,
+                                      $nitetime-bg, $nitetime-bg 24%, $daytime-bg 26%,
+                                      $daytime-bg 74%, $nitetime-bg 76%, $nitetime-bg );
 }
-.blockdiv.pmTimeblock { /* background: $nitetime-bg; */
-  background: -webkit-linear-gradient(left, $daytime-bg,  $daytime-bg 47%, $nitetime-bg 53%, $nitetime-bg );
-}
+
+
 
 .blockdiv.dayTimeblock  { background: $daytime-bg  }
 .blockdiv.niteTimeblock { background: $nitetime-bg }
@@ -282,7 +293,7 @@ dl.detail_list dd {
 
 
 dl.detail_list dd img {
-  height:       12px; /* "inherit" no go for IE  */
+  height:       12px;
   width:        48px;
 }
 
@@ -293,6 +304,7 @@ dl.detail_list dd img {
 }
 
 /****************************************************************************/
+/* Borrowed from mythweb / MythTV */
 
 .cat_Action         { background-color: #906020; }
 .cat_Adult          { background-color: #702020; }

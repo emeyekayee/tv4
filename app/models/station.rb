@@ -48,6 +48,22 @@ class Station < ActiveRecord::Base
   # on the instance in a resource-class-specific way.
   # 
   # ==== Parameters
+  # * <tt>rsrc</tt> - From the rsrc we extract the rid which is in this case is
+  #                   the channel number (string) as we usually think of it.
+  #                   rather than a database id.
+  #
+  def self.decorate_resource( rsrc )
+    rid = rsrc.sub_id
+    station = from_id[ Map.channel_to_station[rid.to_i] ]
+    
+    station.decorate_resource( rsrc )
+  end
+
+
+  # (For SchedResource protocol)  This method lets us set display attributes
+  # on the instance in a resource-class-specific way.
+  # 
+  # ==== Parameters
   # * <tt>rsrc</tt> - A SchedResource instance. 
   def decorate_resource( rsrc )
     rsrc.label = channum
