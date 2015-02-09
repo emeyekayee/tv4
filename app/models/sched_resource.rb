@@ -58,6 +58,8 @@
 #
 class SchedResource
 
+  CONFIG_FILE = "config/resource_schedule.yml"
+
   class_attribute :config
 
   # (SchedResource protocol) Returns a hash where each key is an
@@ -155,7 +157,7 @@ class SchedResource
                     rsrc_of_tag: {},
                     block_class_for_resource_kind: {}
                    }
-    yml = YAML.load_file "config/schedule.yml"
+    yml = YAML.load_file CONFIG_FILE
 
     yml['ResourceKinds'].each do |key, val| # {"Channel" => <#Class Program>...}
       config[:block_class_for_resource_kind][key] = eval val

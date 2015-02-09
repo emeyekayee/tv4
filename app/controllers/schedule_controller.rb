@@ -6,45 +6,23 @@
 
 class ScheduleController < ApplicationController
 
-  def index # angular.js version
+  # Returns angularjs page (template) which in turn fetches data.
+  # See model class SchedResource.
+  def index 
     check_config
   end
 
-  def show
-    schedule
-    render :action => 'schedule'
-  end
-
+  # Json data.
   def schedule
     check_config
 
     param_defaults params
+
     get_data_for_time_span
-    # respond_to do |format|
-    #   format.html
-    #   format.json do
-        json_adjustments
 
-        # @blockss.each{|k,v| puts "\n#{k}: #{v.inspect}"}
-        # puts
-
-        render json: @blockss
-    #   end
-    # end
+    render json: @blockss
    end
 
-  def groupupdate
-    SchedResource.ensure_config session
-    param_defaults params
-    get_data_for_time_span
-  end
-
-  # def test
-  #   SchedResource.config_from_yaml session
-  #   @text = ""
-  #   config = SchedResource.config
-  #   config.keys.each{|key| @text << "\n#{key}:\n" + config[key].inspect}
-  # end
 
 
   private
@@ -52,19 +30,6 @@ class ScheduleController < ApplicationController
   def check_config
     meth = params[:reset] ? :config_from_yaml : :ensure_config
     SchedResource.send( meth, session )
-  end
-
-  def json_adjustments
-    @blockss.each do |rsrc, blocks|
-      blocks.each do |block|
-        block.starttime =  block.starttime.to_i
-        block.endtime   =  block.endtime.to_i
-      end
-    end
-    @blockss['meta'] = {
-      rsrcs: @rsrcs, min_time: min_time, max_time: max_time,
-      t1: @t1.to_i, t2: @t2.to_i, inc: @inc,
-    }
   end
 
   # To Do: Should not rely on specific type (Event).  FIX ME 
@@ -104,7 +69,24 @@ class ScheduleController < ApplicationController
     @rsrcs = SchedResource.resource_list
 
     @blockss = SchedResource.get_all_blocks(@t1, @t2, @inc)
+
+    json_adjustments
   end
 
+  # Always send starttime/endtime attributes as Integer values (UTC) -- they
+  # are used to size and place the blocks.  TZ is configured separately in the
+  # ZTime* classes (config/resource_schedule.yml).
+  def json_adjustments
+    @blockss.each do |rsrc, blocks|
+      blocks.each do |block|
+        block.starttime =  block.starttime.to_i
+        block.endtime   =  block.endtime.to_i
+      end
+    end
+    @blockss['meta'] = {
+      rsrcs: @rsrcs, min_time: min_time, max_time: max_time,
+      t1: @t1.to_i, t2: @t2.to_i, inc: @inc,
+    }
+  end
 
 end

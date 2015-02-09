@@ -1,8 +1,7 @@
 Tv4::Application.routes.draw do
 
   get "/schedule/index" => "schedule#index"
-  get "/schedule" => "schedule#schedule"
-  get "schedule/groupupdate"
+  get "/schedule"       => "schedule#schedule"
 
 
   # The priority is based upon order of creation: first created -> highest priority.
