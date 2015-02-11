@@ -23,9 +23,9 @@ class Event < ActiveRecord::Base
   # end
 
 
-  # (SchedResource protocol) Returns a hash where each key is a SchedResource
-  # id (rid, here, a channel number) and the value is an array of Events
-  # (program showings) in the interval <tt>t1...t2</tt>, ordered by
+  # (ScheduledResource protocol) Returns a hash where each key is a
+  # ScheduledResource id (rid, here, a channel number) and the value is an array
+  # of Events (program showings) in the interval <tt>t1...t2</tt>, ordered by
   # <tt>starttime</tt>.
   #
   # What <em>in</em> means depends on *inc*.  If inc(remental) is

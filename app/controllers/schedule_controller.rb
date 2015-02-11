@@ -7,7 +7,7 @@
 class ScheduleController < ApplicationController
 
   # Returns angularjs page (template) which in turn fetches data.
-  # See model class SchedResource.
+  # See model class ScheduledResource.
   def index 
     check_config
   end
@@ -29,7 +29,7 @@ class ScheduleController < ApplicationController
 
   def check_config
     meth = params[:reset] ? :config_from_yaml : :ensure_config
-    SchedResource.send( meth, session )
+    ScheduledResource.send( meth, session )
   end
 
   # To Do: Should not rely on specific type (Event).  FIX ME 
@@ -46,7 +46,7 @@ class ScheduleController < ApplicationController
 
   def param_defaults(p = {})
     @t1 = p[:t1] || time_default
-    @t2 = p[:t2] || @t1 + SchedResource.visible_time
+    @t2 = p[:t2] || @t1 + ScheduledResource.visible_time
     @inc= p[:inc]
   end
 
@@ -66,9 +66,9 @@ class ScheduleController < ApplicationController
     @t1 = Time.at(@t1.to_i)
     @t2 = Time.at(@t2.to_i)
 
-    @rsrcs = SchedResource.resource_list
+    @rsrcs = ScheduledResource.resource_list
 
-    @blockss = SchedResource.get_all_blocks(@t1, @t2, @inc)
+    @blockss = ScheduledResource.get_all_blocks(@t1, @t2, @inc)
 
     json_adjustments
   end

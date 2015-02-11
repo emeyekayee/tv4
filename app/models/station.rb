@@ -27,11 +27,11 @@ class Station < ActiveRecord::Base
   end
 
 
-  # The rid (SchedResource resource id) is the channel number (string)
+  # The rid (ScheduledResource resource id) is the channel number (string)
   # 
-  # (For SchedResource protocol)  Returns a Station object from channum.  This
-  # lets us specify the yml configuration with regular channel numbers rather
-  # than funky database id integers.
+  # (For ScheduledResource protocol) Returns a Station object from channum.
+  # This lets us specify the yml configuration with regular channel numbers
+  # rather than funky database id integers.
   # 
   # ==== Parameters
   # * <tt>channum</tt> - A channel number (string) as we usually think of it
@@ -44,7 +44,7 @@ class Station < ActiveRecord::Base
   end
 
   
-  # (For SchedResource protocol)  This method lets us set display attributes
+  # (For ScheduledResource protocol)  This method lets us set display attributes
   # on the instance in a resource-class-specific way.
   # 
   # ==== Parameters
@@ -60,11 +60,11 @@ class Station < ActiveRecord::Base
   end
 
 
-  # (For SchedResource protocol)  This method lets us set display attributes
+  # (For ScheduledResource protocol)  This method lets us set display attributes
   # on the instance in a resource-class-specific way.
   # 
   # ==== Parameters
-  # * <tt>rsrc</tt> - A SchedResource instance. 
+  # * <tt>rsrc</tt> - A ScheduledResource instance. 
   def decorate_resource( rsrc )
     rsrc.label = channum
     rsrc.title = name

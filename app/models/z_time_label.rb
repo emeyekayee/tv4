@@ -1,4 +1,4 @@
-# For SchedResource protocol.  This is a base UseBlock class for ZTimeHeader
+# For ScheduledResource protocol.  This is a base UseBlock class for ZTimeHeader
 # use-block subclasses.  These are timezone-aware time headers (rows) and labels
 # (use-blocks).  The timezone is specified by the last component of the resource
 # id (rid).  Eg, for '-8' the timezone is ActiveSupport::TimeZone.new(-8)
@@ -14,7 +14,7 @@ class ZTimeLabel
   end
 
 
-  # (SchedResource protocol) Returns a hash where each key is an
+  # (ScheduledResource protocol) Returns a hash where each key is an
   # <tt>rid</tt> and the value is an array of ZTimeLabels (use
   # blocks) in the interval <tt>t1...t2</tt>, ordered by
   # <tt>starttime</tt>.
