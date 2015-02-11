@@ -4,6 +4,9 @@
 # Hi-lock: end
 # ============================================================================
 
+# Hmm... Seem to need this here to get the ZTime* classes loaded in time.
+require 'scheduled_resource'
+
 class ScheduleController < ApplicationController
 
   # Returns angularjs page (template) which in turn fetches data.
