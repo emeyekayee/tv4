@@ -141,39 +141,13 @@ a:visited {  color: white;  text-decoration: none;}
     width:            56px;
   }
 
+  // This is used to shelve a background image (if any) vs foreground label text.
   > div.filter {
     position:         absolute;
     background:       $bg-color;
     width:            56px;
     z-index:          1;
     opacity:          0.5;
-  }
-}
-
-
-
-.Stationrow {
-  height:           36px;
-
-  .rsrclabel {
-    div {
-      font-size:    16pt;
-    }
-
-    img {
-      height:       36px;       /* Is "inherit" still a no go for IE?  */
-      width:        56px;
-    }
-
-    > div.filter {
-      height:       36px;
-    }
-
-  }
-
-  .blockdiv {
-    height:         32px;
-    padding:        2px;
   }
 }
 
@@ -219,7 +193,6 @@ a:visited {  color: white;  text-decoration: none;}
 }
 
 
-
 .ZTimeHeaderHourrow,
 .ZTimeHeaderHourRow {
   .blockdiv {
@@ -243,8 +216,35 @@ a:visited {  color: white;  text-decoration: none;}
                                       $daytime-bg 74%, $nitetime-bg 76%, $nitetime-bg );
 }
 
-
-
 .blockdiv.dayTimeblock  { background: $daytime-bg  }
 .blockdiv.niteTimeblock { background: $nitetime-bg }
+
+
+// This is included as a model for adding a new scheduled resource type.
+// In fact is it what is used for the tv4 example.
+// .Stationrow {
+//   height:           36px;
+
+//   .rsrclabel {
+//     div {
+//       font-size:    16pt;
+//     }
+
+//     img {
+//       height:       36px;
+//       width:        56px;
+//     }
+
+//     > div.filter {
+//       height:       36px;
+//     }
+
+//   }
+
+//   .blockdiv {
+//     height:         32px;
+//     padding:        2px;
+//   }
+// }
+
 

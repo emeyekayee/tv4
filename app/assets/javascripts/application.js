@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require angular
 //= require use_block
+//= require time_pix
+//= require justify_tweaks
 //= require controllers
 //= require script
 //= require infopopup
