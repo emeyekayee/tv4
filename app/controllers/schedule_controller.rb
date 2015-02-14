@@ -19,13 +19,10 @@ class ScheduleController < ApplicationController
   def schedule
     check_config
 
-    param_defaults params
-
     get_data_for_time_span
 
     render json: @blockss
    end
-
 
 
   private
@@ -44,16 +41,15 @@ class ScheduleController < ApplicationController
   def min_time;  overall_time_range.min.to_i  end
   def max_time;  overall_time_range.max.to_i  end
 
-
-  def param_defaults(p = {})
-    @t1 = p[:t1] || time_default
-    @t2 = p[:t2] || @t1 + ScheduledResource.visible_time
-    @inc= p[:inc]
-  end
-
   def time_default
     t_now = Time.now
     t_now.change :min => (t_now.min/15) * 15
+  end
+
+  def set_schedule_query_params(p = params)
+    @t1 = p[:t1] || time_default
+    @t2 = p[:t2] || @t1 + ScheduledResource.visible_time
+    @inc= p[:inc]
   end
 
   # Set up instance variables for render templates
@@ -64,6 +60,8 @@ class ScheduleController < ApplicationController
   #  creates: @rsrcs    ordered resource list
   #           @blockss: lists of use-blocks, keyed by resource
   def get_data_for_time_span()
+    set_schedule_query_params
+
     @t1 = Time.at(@t1.to_i)
     @t2 = Time.at(@t2.to_i)
 
