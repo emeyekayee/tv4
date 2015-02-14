@@ -37,15 +37,13 @@ class ScheduleController < ApplicationController
 
   # To Do: Should not rely on specific type (Event).  FIX ME 
   # To Do: Also, consider a class_attribute here
-  def min_time
-    @min_time ||= Event.minimum(:time).to_i
-  end
+  class_attribute :overall_time_range
+  t0 = Time.now.midnight
+  self.overall_time_range = (t0 - 1.week)..(t0 + 1.week)
 
-  # To Do: Should not rely on specific type (Event).  FIX ME 
-  # To Do: Also, consider a class_attribute here
-  def max_time
-    @max_time ||= Event.maximum(:etime).to_i
-  end
+  def min_time;  overall_time_range.min.to_i  end
+  def max_time;  overall_time_range.max.to_i  end
+
 
   def param_defaults(p = {})
     @t1 = p[:t1] || time_default
