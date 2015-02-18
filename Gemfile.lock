@@ -2,6 +2,8 @@ PATH
   remote: ../scheduled_resource
   specs:
     scheduled_resource (0.0.1)
+      coffee-rails
+      rails
 
 GEM
   remote: https://rubygems.org/

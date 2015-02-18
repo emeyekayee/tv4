@@ -16,13 +16,17 @@ Resources:
    - Station              3 
    - Station              703 
    - Station              709
-   - Station              189 190 220
+#   - Station              189 190 220
    - ZTimeHeaderHour      -8.
 #   - Station              550 551
-   - Station              37 737 
-   - Station              42 738
+   - Station              37
+#                            737 
+   - Station              42
+#                            738
    - Station              756
    - Station              757
-   - Station              49 798 
-   - Station              162 810
+   - Station              49 
+   #                      798
+   - Station              162
+   #                    810
    #                    738
