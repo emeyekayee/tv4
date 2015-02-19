@@ -1,10 +1,3 @@
-PATH
-  remote: ../scheduled_resource
-  specs:
-    scheduled_resource (0.0.1)
-      coffee-rails
-      rails
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -95,6 +88,9 @@ GEM
       railties (>= 4.0.0.beta, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
+    scheduled_resource (0.0.1)
+      coffee-rails
+      rails
     sdoc (0.3.20)
       json (>= 1.1.3)
       rdoc (~> 3.10)
@@ -138,7 +134,7 @@ DEPENDENCIES
   pry-rails
   rails (= 4.0.0)
   sass-rails (~> 4.0.0)
-  scheduled_resource!
+  scheduled_resource
   sdoc
   turbolinks
   uglifier (>= 1.3.0)
