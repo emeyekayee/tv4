@@ -8,8 +8,8 @@ gem 'mysql2', '= 0.3.11'
 
 # Extracted into its own gem.
 gem 'scheduled_resource'
-# gem 'scheduled_resource', github: 'emeyekayee/scheduled_resource'
 # gem 'scheduled_resource', path: '../scheduled_resource'
+# gem 'scheduled_resource', github: 'emeyekayee/scheduled_resource'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

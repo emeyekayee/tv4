@@ -8,7 +8,10 @@ class @TimePix            # Ultimately, an angular $service
     @scroll_container().css( 'width', @pixWindow + 'px' )
     $('#scrollbar-hider').css('width', @pixWindow + 61 + 'px' )
 
-  
+
+  ##############################################################################
+  # 'meta' part of latest returned json + overall display data
+  #
   @baseTime: 0
   @timeWindow: (3 * 3600)
   @pixWindow: 750         # Matching width of #scrolling-container
@@ -27,6 +30,7 @@ class @TimePix            # Ultimately, an angular $service
     @thi = @thi && Math.max( @thi, @meta.t2 ) || @meta.t2
     @inc = @meta.inc
     @timeWindow = @meta.visible_time if @meta.visible_time
+  ##############################################################################
 
   @next_hi: -> @thi + @timeWindow
   @next_lo: -> @tlo - @timeWindow
@@ -42,7 +46,13 @@ class @TimePix            # Ultimately, an angular $service
   @style_geo: (block) ->
     [s, e] = [block.starttime, block.endtime]             # per margins V
     "left: #{@secs_to_pix_scale(s - @baseTime)}px; " +
-    "width: #{@secs_to_pix_scale(e-s)-4}px;" 
+    "width: #{@secs_to_pix_scale(e-s)-4}px;"
+
+  # Reactjs prefers this variant
+  @style_geo_hash: (block) ->
+    [s, e] = [block.starttime, block.endtime]             # per margins V
+    left:  "#{@secs_to_pix_scale(s - @baseTime)}px"
+    width: "#{@secs_to_pix_scale(e-s)-4}px"
 
   @row_kind: (tag) ->  # may/may not belong here.
     tag.split('_')[0]
@@ -67,7 +77,7 @@ class @TimePix            # Ultimately, an angular $service
     @scroll_to_ux_time( @thi - @timeWindow )
 
   @ux_time_of_pix: (x) ->
-    @pix_to_secs(x) 
+    @pix_to_secs(x)
 
   @scroll_to_tlo: =>   # bound
     @scroll_to_ux_time @tlo
@@ -91,9 +101,9 @@ class @TimePix            # Ultimately, an angular $service
       r_vis_time = l_vis_time + @timeWindow
 
       if      r_vis_time > @thi
-        RsrcListCtrlScope.$apply RsrcListCtrlScope.more_data
+        @expand_data 'more_data'
       else if l_vis_time < @tlo
-        RsrcListCtrlScope.$apply RsrcListCtrlScope.less_data
+        @expand_data 'less_data'
     else
       if new Date() - @scroll_monitor.scroll_timestamp > 1000
         filter_justify_tweaks( sc ) # Try to make scrolled-off content visible
@@ -101,3 +111,11 @@ class @TimePix            # Ultimately, an angular $service
 
     setTimeout @scroll_monitor, 100
 
+
+  # Angular-vs-react issues
+  @expand_data: (method_name) -> 
+    if TopResourceSchedule?
+      TopResourceSchedule[method_name]() 
+    else
+      RsrcListCtrlScope.$apply RsrcListCtrlScope[method_name]
+    return
