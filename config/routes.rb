@@ -1,4 +1,5 @@
-Tv4::Application.routes.draw do
+# Tv4::Application.routes.draw do
+Rails.application.routes.draw do
 
   get "/schedule/index" => "schedule#index"
   get "/schedule"       => "schedule#schedule"
